@@ -15,8 +15,6 @@ logging.basicConfig(filename='ddns.log',
                     format='[%(asctime)s][%(levelname)s]: %(message)s',
                     datefmt='%Y-%m-%d %I:%M:%S')
 
-config = None
-
 
 def read_yaml(filename):
     r"""
@@ -156,8 +154,7 @@ def main():
     t_start = datetime.datetime.now()
     logging.info(
         "--- Task started at {time}".format(time=t_start.strftime("%Y-%m-%d %H:%M:%S %f")))
-    # Configuration section
-    global config
+
     config = read_yaml('config.yaml')
     access_key = config['User']['AccessKey']
     secret = config['User']['Secret']
