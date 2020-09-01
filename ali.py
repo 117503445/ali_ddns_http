@@ -150,7 +150,12 @@ def write_local_ip_cache(ip_address):
         logging.error(e)
 
 
-def main():
+def get_self_ip():
+    return subprocess.check_output(
+        ["curl", "-s", "whatismyip.akamai.com"]).decode("utf-8")
+
+
+def update_by_ip(ip_address):
     t_start = datetime.datetime.now()
     logging.info(
         "--- Task started at {time}".format(time=t_start.strftime("%Y-%m-%d %H:%M:%S %f")))
@@ -163,8 +168,6 @@ def main():
     host = config['Domain']['Host']
     _type = config['Domain']['Type']
 
-    ip_address = subprocess.check_output(
-        ["curl", "-s", "whatismyip.akamai.com"]).decode("utf-8")
     ip_cache = get_local_ip_cache()
     if ip_cache == ip_address:
         logging.info("IP address up to date, same as the cached content: {ip_address}.".format(
@@ -183,6 +186,10 @@ def main():
     t_end = datetime.datetime.now()
     logging.info(
         "--- Task ended at: {time}".format(time=t_end.strftime("%Y-%m-%d %H:%M:%S %f")))
+
+
+def main():
+    update_by_ip(get_self_ip())
     return 0
 
 
