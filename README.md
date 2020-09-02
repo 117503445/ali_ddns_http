@@ -17,3 +17,7 @@ exp:
 Name -> 117503445.top
 
 Host -> xd
+
+## 部署
+
+python server.py
